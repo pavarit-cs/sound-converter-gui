@@ -1,3 +1,4 @@
+import os.path
 import tkinter as tk
 from tkinter import filedialog
 
@@ -31,6 +32,16 @@ def open_file_dialog():
     if input_path:
         label_input_select.config(text=f"{output_path}")
 
+def update_output_path(*args):
+    current_input_path = input_path.get()
+    selected_format = output_format.get()
+
+    base_name = os.path.basename(current_input_path)
+    without_ext_name = os.path.splitext(base_name)[0]
+
+    new_name = f"{without_ext_name}.{selected_format}"
+    output_path.set(new_name)
+
 # --- Widgets for GUI ---
 label_greeting = tk.Label(text='Welcome to Sound Converter!')
 label_greeting.pack(pady=50)
@@ -42,6 +53,7 @@ label_input_select.pack(pady=5)
 
 dropdown_menu = tk.OptionMenu(app, output_format, *output_type)
 dropdown_menu.pack(pady=20)
+output_format.trace("w", update_output_path)
 button_convert = tk.Button(app,
                            text="convert",
                            font=("Arial", 18),
