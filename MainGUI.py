@@ -1,6 +1,7 @@
 import os.path
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
+from converter import  convert_audio_file
 
 # --- Setting Main Window ---
 app = tk.Tk()
@@ -30,7 +31,7 @@ def open_file_dialog():
         ("m4a files", "*.m4a"))))
 
     if input_path:
-        label_input_select.config(text=f"{output_path}")
+        label_input_select.config(text=f"{input_path}")
 
 def update_output_path(*args):
     current_input_path = input_path.get()
@@ -40,7 +41,11 @@ def update_output_path(*args):
     without_ext_name = os.path.splitext(base_name)[0]
 
     new_name = f"{without_ext_name}.{selected_format}"
-    output_path.set(new_name)
+    output_directory = os.path.dirname(current_input_path)
+    full_output_path = os.path.join(output_directory, new_name)
+    output_path.set(full_output_path)
+def convert():
+    convert_audio_file(input_path.get(), output_path.get(), output_format.get())
 
 # --- Widgets for GUI ---
 label_greeting = tk.Label(text='Welcome to Sound Converter!')
@@ -62,8 +67,11 @@ button_convert = tk.Button(app,
                            activebackground="#45a049",
                            activeforeground="white",
                            relief="raised",
-                           borderwidth=4, )
+                           borderwidth=4,
+                           command=convert)
 button_convert.pack(pady = 20)
+label_result = tk.Label(app, font=("success", 13), fg="green")
+
 
 
 
