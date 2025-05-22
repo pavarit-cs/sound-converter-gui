@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 
 # --- Setting Main Window ---
 app = tk.Tk()
@@ -20,15 +21,24 @@ output_format = tk.StringVar()
 output_format.set(output_type[0])
 
 # --- Function handlers ---
+def open_file_dialog():
+    input_path.set(filedialog.askopenfilename(initialdir="Downloads", filetypes=(
+        ("All supported audio files", "*.wav *.mp3 *.m4a"),
+        ("wav files", "*.wav"),
+        ("mp3 files", "*.mp3"),
+        ("m4a files", "*.m4a"))))
+
+    if input_path:
+        label_input_select.config(text=f"{output_path}")
 
 # --- Widgets for GUI ---
 label_greeting = tk.Label(text='Welcome to Sound Converter!')
 label_greeting.pack(pady=50)
 
-button_openfile = tk.Button(app, text="Select your file")
+button_openfile = tk.Button(app, text="Select your file", command=open_file_dialog)
 button_openfile.pack(pady=10)
-label_output_select = tk.Label(app, textvariable=input_path, font=("Courier New", 14), fg="red")
-label_output_select.pack(pady=5)
+label_input_select = tk.Label(app, textvariable=input_path, font=("Courier New", 11), fg="red")
+label_input_select.pack(pady=5)
 
 dropdown_menu = tk.OptionMenu(app, output_format, *output_type)
 dropdown_menu.pack(pady=20)
