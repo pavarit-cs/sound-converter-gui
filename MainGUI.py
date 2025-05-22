@@ -15,13 +15,34 @@ app.resizable(False, False)
 # --- value for GUI ---
 input_path = tk.StringVar()
 output_path = tk.StringVar()
-output_format = tk.StringVar(value="wav")
+output_type = ["wav", "mp3", "m4a"]
+output_format = tk.StringVar()
+output_format.set(output_type[0])
 
 # --- Function handlers ---
 
 # --- Widgets for GUI ---
 label_greeting = tk.Label(text='Welcome to Sound Converter!')
 label_greeting.pack(pady=50)
+
+button_openfile = tk.Button(app, text="Select your file")
+button_openfile.pack(pady=10)
+label_output_select = tk.Label(app, textvariable=input_path, font=("Courier New", 14), fg="red")
+label_output_select.pack(pady=5)
+
+dropdown_menu = tk.OptionMenu(app, output_format, *output_type)
+dropdown_menu.pack(pady=20)
+button_convert = tk.Button(app,
+                           text="convert",
+                           font=("Arial", 18),
+                           fg="white",
+                           bg="#4CAF50",
+                           activebackground="#45a049",
+                           activeforeground="white",
+                           relief="raised",
+                           borderwidth=4, )
+button_convert.pack(pady = 20)
+
 
 
 
