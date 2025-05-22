@@ -3,6 +3,11 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from converter import  convert_audio_file
 
+# --- Debugging: Print Python's perceived PATH ---
+#print("--- Python's PATH Environment Variable ---")
+#print(os.environ.get('PATH'))
+
+
 # --- Setting Main Window ---
 app = tk.Tk()
 app.title("Sound Converter")
@@ -46,7 +51,14 @@ def update_output_path(*args):
     output_path.set(full_output_path)
 def convert():
     convert_audio_file(input_path.get(), output_path.get(), output_format.get())
+    success, message = convert_audio_file(input_path.get(), output_path.get(), output_format.get())
 
+    if success:
+        messagebox.showinfo("Success!", message)
+        label_result.config(text=f"status: {message}", fg="green")
+    else:
+        messagebox.showerror("Error", message)
+        label_result.config(text=f"status: {message}", fg="red")
 # --- Widgets for GUI ---
 label_greeting = tk.Label(text='Welcome to Sound Converter!')
 label_greeting.pack(pady=50)
