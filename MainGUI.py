@@ -12,8 +12,8 @@ y_coordinate = (screen_height // 2) - (WINDOW_HEIGHT // 2)
 app.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{x_coordinate}+{y_coordinate}')
 
 
-label_greeting = tk.Label(text='Welcome!')
-label_greeting.pack()
+label_greeting = tk.Label(text='Welcome to Sound Converter!')
+label_greeting.pack(pady=50)
 
 app.resizable(False, False)
 app.mainloop()
